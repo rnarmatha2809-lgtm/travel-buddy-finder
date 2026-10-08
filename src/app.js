@@ -189,15 +189,18 @@ app.get("/search/:destination", async (req, res) => {
 // START EXPRESS SERVER
 // ------------------------------------
 
-app.listen(PORT, "0.0.0.0", () => {
+if (require.main === module) {
+    app.listen(PORT, "0.0.0.0", () => {
 
     console.log("--------------------------------");
     console.log("Travel Buddy server started");
     console.log(`Server running on port ${PORT}`);
     console.log("--------------------------------");
 
-});
+    });
+}
 
+module.exports = app;
 
 // ------------------------------------
 // CONNECT TO MONGODB
