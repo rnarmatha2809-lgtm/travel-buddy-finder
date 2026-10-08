@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Travel Buddy Finder</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 450px;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #4a90e2;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #357abd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Travel Buddy Finder</h1>
+
+        <p class="subtitle">
+            Find a travel companion for your next journey
+        </p>
+
+        <form id="buddyForm">
+
+            <label for="name">Name</label>
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                required
+            >
+
+            <label for="age">Age</label>
+            <input
+                type="number"
+                id="age"
+                placeholder="Enter your age"
+                min="1"
+                required
+            >
+
+            <label for="destination">Destination</label>
+            <input
+                type="text"
+                id="destination"
+                placeholder="Where are you travelling?"
+                required
+            >
+
+            <label for="travelDate">Travel Date</label>
+            <input
+                type="date"
+                id="travelDate"
+                required
+            >
+
+            <label for="interests">Interests</label>
+            <input
+                type="text"
+                id="interests"
+                placeholder="Hiking, Photography, Adventure..."
+                required
+            >
+
+            <button type="submit">
+                Add Travel Buddy
+            </button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        document.getElementById("buddyForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+                const buddy = {
+                    name: document.getElementById("name").value,
+                    age: document.getElementById("age").value,
+                    destination:
+                        document.getElementById("destination").value,
+                    travelDate:
+                        document.getElementById("travelDate").value,
+                    interests:
+                        document.getElementById("interests").value
+                };
+
+                try {
+
+                    const response = await fetch("/add", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(buddy)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert("Travel Buddy added successfully!");
+                        document.getElementById("buddyForm").reset();
+                    } else {
+                        alert("Error: " + data.message);
+                    }
+
+                } catch (error) {
+
+                    alert("Unable to connect to the server.");
+
+                    console.error(error);
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>
