@@ -33,3 +33,5 @@ Via Thunder Client:
 5. Click on 'Send' to make the request.
 
 Happy coding! 🙂
+## Version Control
+This project is maintained using Git and GitHub.
